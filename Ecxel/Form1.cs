@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ExcelDataReader;
 using System.Text.RegularExpressions;
@@ -28,17 +23,24 @@ namespace Ecxel
         {
             //try
             //{
-                fileName = "C:\\Users\\Админ\\Desktop\\Рабочий стол\\Ecxel\\Ecxel\\Таблица.xlsx";
-                openExcelFile(fileName);
+            fileName = Environment.CurrentDirectory;
+            fileName = fileName.Substring(0, fileName.Length - 23);
+            fileName += "Таблица.xlsx";
+            openExcelFile(fileName);
 
-                DataTable table = tableCollection["лист"];
-                dataGridView1.DataSource = table;
-            fillComboBox();
-           // }
-           //catch
-           //{
-           //MessageBox.Show();
-           // }
+            DataTable table = tableCollection["лист"];
+            dataGridView.DataSource = table;
+            foreach (DataGridViewColumn column in dataGridView.Columns)
+            {
+                column.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            }
+
+            fillOkrug();
+            // }
+            //catch
+            //{
+            //MessageBox.Show();
+            // }
         }
 
         private void openExcelFile(string path)
@@ -57,16 +59,16 @@ namespace Ecxel
             tableCollection = db.Tables;
         }
 
-        private void fillComboBox()
+        private void fillOkrug()
         {
-            count = dataGridView1.Rows.Count - 1;
+            count = dataGridView.Rows.Count - 1;
             for (int i = 0; i < count; i++)
             {
                 int index = -1;
 
                 for (int j = 0; j < cb_okrug.Items.Count; j++)
                 {
-                    if (Convert.ToString(cb_okrug.Items[j]).ToLower() == Convert.ToString(dataGridView1[1, i].Value).ToLower())
+                    if (Convert.ToString(cb_okrug.Items[j]).ToLower() == Convert.ToString(dataGridView[1, i].Value).ToLower())
                     {
                         index = 0;
                         break;
@@ -80,7 +82,7 @@ namespace Ecxel
                 else
                 {
                     bool bor = true;
-                    index = Convert.ToString(dataGridView1[1, i].Value).ToLower().IndexOf("бор");
+                    index = Convert.ToString(dataGridView[1, i].Value).ToLower().IndexOf("бор");
                     for (int j = 0; j < cb_okrug.Items.Count; j++)
                     {
                         if (index != -1)
@@ -94,7 +96,7 @@ namespace Ecxel
 
                     bool arz = true;
                     index = -1;
-                    index = Convert.ToString(dataGridView1[1, i].Value).ToLower().IndexOf("арзамас");
+                    index = Convert.ToString(dataGridView[1, i].Value).ToLower().IndexOf("арзамас");
                     for (int j = 0; j < cb_okrug.Items.Count; j++)
                     {
                         if (index != -1)
@@ -108,33 +110,43 @@ namespace Ecxel
 
                     bool len = true;
                     index = -1;
-                    index = Convert.ToString(dataGridView1[1, i].Value).ToLower().IndexOf("ленинский");
+                    index = Convert.ToString(dataGridView[1, i].Value).ToLower().IndexOf("ленинский");
                     for (int j = 0; j < cb_okrug.Items.Count; j++)
                     {
                         if (index != -1)
                         {
                             if (Regex.IsMatch(Convert.ToString(cb_okrug.Items[j]).ToLower(), @"ленинский"))
                             {
-                                arz = false;
+                                len = false;
                             }
                         }
                     }
 
-                    if (bor && arz && len)
+                    bool kan = true;
+                    index = -1;
+                    index = Convert.ToString(dataGridView[1, i].Value).ToLower().IndexOf("канавинский");
+                    for (int j = 0; j < cb_okrug.Items.Count; j++)
                     {
-                        //bool kan = true;
-                        //for (int j = 0; j < cb_okrug.Items.Count; j++)
-                        //{
-                        //    if (Regex.IsMatch(Convert.ToString(cb_okrug.Items[j]).ToLower(), @"канавинский"))
-                        //    {
-                        //        cb_okrug.Items.Add("канавинский");
-                        //        kan = false;
-                        //    }
-                        //}
-                        //if (kan)
-                        //{
-                            cb_okrug.Items.Add(dataGridView1[1, i].Value);
-                        //}
+                        if (index != -1)
+                        {
+                            if (Regex.IsMatch(Convert.ToString(cb_okrug.Items[j]).ToLower(), @"канавинский"))
+                            {
+                                kan = false;
+                            }
+                        }
+                    }
+
+                    if (bor && arz && len && kan)
+                    {
+                        if (Regex.IsMatch(Convert.ToString(dataGridView[1, i].Value).ToLower(), @"канавинский"))
+                        {
+                            cb_okrug.Items.Add("Канавинский");
+                            kan = false;
+                        }
+                        else
+                        {
+                            cb_okrug.Items.Add(dataGridView[1, i].Value);
+                        }
                     }
                 }
             }
