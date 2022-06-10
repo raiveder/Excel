@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Data;
+using SD = System.Data;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using ExcelDataReader;
 using System.Text.RegularExpressions;
+using System.Linq;
+using Microsoft.Office.Interop.Excel;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Ecxel
 {
     public partial class Form1 : Form
     {
-        MonthCalendar monthCalendar1 = new MonthCalendar();
         public Form1()
         {
             InitializeComponent();
@@ -29,18 +32,21 @@ namespace Ecxel
             fileName += "Таблица.xlsx";
             openExcelFile(fileName);
 
-            DataTable table = tableCollection["лист"];
+            SD.DataTable table = tableCollection["лист"];
             dataGridView.DataSource = table;
             foreach (DataGridViewColumn column in dataGridView.Columns)
             {
                 column.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             }
+            //dataGridView.Columns.RemoveAt(1);
 
+            count = dataGridView.Rows.Count - 1;
             fillOkrug();
             fillClass();
             fillOrganiz();
             fillAdres();
             fillStatus();
+            fillPeople();
             // }
             //catch
             //{
@@ -66,7 +72,7 @@ namespace Ecxel
 
         private void fillOkrug()
         {
-            count = dataGridView.Rows.Count - 1;
+            cb_okrug.Items.Add("");
             for (int i = 0; i < count; i++)
             {
                 int index = -1;
@@ -146,7 +152,6 @@ namespace Ecxel
                         if (Regex.IsMatch(Convert.ToString(dataGridView[1, i].Value).ToLower(), @"канавинский"))
                         {
                             cb_okrug.Items.Add("Канавинский");
-                            kan = false;
                         }
                         else
                         {
@@ -156,92 +161,55 @@ namespace Ecxel
                 }
             }
         }
+
         private void fillClass()
         {
-            count = dataGridView.Rows.Count - 1;
+            cb_class.Items.Add("");
             for (int i = 0; i < count; i++)
             {
-                int index = -1;
+                bool check = false;
+                int.TryParse(string.Join("", Convert.ToString(dataGridView[4, i].Value).Where(c => char.IsDigit(c))), out int klass); //Запись в klass только цифры из названия класса
 
                 for (int j = 0; j < cb_class.Items.Count; j++)
                 {
-                    if (Convert.ToString(cb_class.Items[j]).ToLower() == Convert.ToString(dataGridView[4, i].Value).ToLower())
+                    if (j == 0)
                     {
-                        index = 0;
+                        continue;
+                    }
+
+                    if (Convert.ToInt32(cb_class.Items[j]) == klass)
+                    {
+                        check = true;
                         break;
                     }
                 }
 
-                if (index != -1)
+                if (check)
                 {
                     continue;
                 }
                 else
                 {
-                    bool seven = true;
-                    index = -1;
-                    index = Convert.ToString(dataGridView[4, i].Value).ToLower().IndexOf("7");
-                    for (int j = 0; j < cb_class.Items.Count; j++)
-                    {
-                        if (index != -1)
-                        {
-                            if (Regex.IsMatch(Convert.ToString(cb_class.Items[j]).ToLower(), @"7"))
-                            {
-                                seven = false;
-                            }
-                        }
-                    }
-
-                    bool eight = true;
-                    index = -1;
-                    index = Convert.ToString(dataGridView[4, i].Value).ToLower().IndexOf("8");
-                    for (int j = 0; j < cb_class.Items.Count; j++)
-                    {
-                        if (index != -1)
-                        {
-                            if (Regex.IsMatch(Convert.ToString(cb_class.Items[j]).ToLower(), @"8"))
-                            {
-                                eight = false;
-                            }
-                        }
-                    }
-
-                    if (seven && eight)
-                    {
-                        if (Regex.IsMatch(Convert.ToString(dataGridView[4, i].Value).ToLower(), @"7"))
-                        {
-                            cb_class.Items.Add("7");
-                            seven = false;
-                        }
-                        else if (Regex.IsMatch(Convert.ToString(dataGridView[4, i].Value).ToLower(), @"8"))
-                        {
-                            cb_class.Items.Add("8");
-                            eight = false;
-                        }
-                        else
-                        {
-                            cb_class.Items.Add(dataGridView[4, i].Value);
-                        }
-                    }
+                    cb_class.Items.Add(Convert.ToString(klass));
                 }
             }
         }
 
-        private void fillOrganiz() //убрать пробелы перед названиями
+        private void fillOrganiz()
         {
-            count = dataGridView.Rows.Count - 1;
+            cb_organiz.Items.Add("");
             for (int i = 0; i < count; i++)
             {
-                int index = -1;
+                bool check = false;
                 for (int j = 0; j < cb_organiz.Items.Count; j++)
                 {
                     if (Convert.ToString(cb_organiz.Items[j]).ToLower() == Convert.ToString(dataGridView[5, i].Value).ToLower())
                     {
-                        index = 0;
+                        check = true;
                         break;
                     }
                 }
-                if (index != -1)
+                if (check)
                 {
                     continue;
                 }
@@ -254,19 +222,19 @@ namespace Ecxel
 
         private void fillAdres()
         {
-            count = dataGridView.Rows.Count - 1;
+            cb_adres.Items.Add("");
             for (int i = 0; i < count; i++)
             {
-                int index = -1;
+                bool check = false;
                 for (int j = 0; j < cb_adres.Items.Count; j++)
                 {
                     if (Convert.ToString(cb_adres.Items[j]).ToLower() == Convert.ToString(dataGridView[6, i].Value).ToLower())
                     {
-                        index = 0;
+                        check = true;
                         break;
                     }
                 }
-                if (index != -1)
+                if (check)
                 {
                     continue;
                 }
@@ -277,59 +245,100 @@ namespace Ecxel
             }
         }
 
-        private void fillStatus()
+        private void fillStatus() //Участник и участник
         {
-            count = dataGridView.Rows.Count - 1;
+            cb_status.Items.Add("");
+
+            bool unspecified = false;
+            bool unspecifiedFill = true;
+
             for (int i = 0; i < count; i++)
             {
-                int index = -1;
+                bool check = false;
+
+                if (Convert.ToString(dataGridView[8, i].Value) == "" && unspecifiedFill)
+                {
+                    unspecified = true;
+                }
 
                 for (int j = 0; j < cb_status.Items.Count; j++)
                 {
+                    if (unspecified)
+                    {
+                        cb_status.Items.Add("Не указано");
+                        check = true;
+                        unspecified = false;
+                        unspecifiedFill = false;
+                        break;
+                    }
+
                     if (Convert.ToString(cb_status.Items[j]).ToLower() == Convert.ToString(dataGridView[8, i].Value).ToLower())
                     {
-                        index = 0;
+                        check = true;
                         break;
                     }
                 }
 
-                if (index != -1)
+                if (check)
                 {
                     continue;
                 }
                 else
                 {
-                    bool no = true;
-                    index = -1;
-                    if(Convert.ToString(dataGridView[8, i].Value).ToLower()=="")
-                    {
-                        index = 0;
-                    }
-                    
-                    for (int j = 0; j < cb_status.Items.Count; j++)
-                    {
-                        if (index != -1)
-                        {
-                            if (Convert.ToString(cb_status.Items[j]).ToLower()=="не указано")
-                            {
-                                no = false;
-                            }
-                        }
-                    }
-                    if (no)
-                    {
-                        if (Convert.ToString(dataGridView[8, i].Value).ToLower()=="")
-                        {
-                            cb_status.Items.Add("не указано");
-                            no = false;
-                        }
-                        else
-                        {
-                            cb_status.Items.Add(dataGridView[8, i].Value);
-                        }
-                    }
+                    cb_status.Items.Add(dataGridView[8, i].Value);
                 }
             }
+        }
+
+        private void fillPeople()
+        {
+            cb_uchenik.Items.Add("");
+            cb_nastavnik.Items.Add("");
+            for (int i = 0; i < count; i++)
+            {
+                cb_nastavnik.Items.Add(dataGridView[10, i].Value);
+                cb_uchenik.Items.Add(dataGridView[2, i].Value);
+            }
+        }
+
+        private void btn_open_Click(object sender, EventArgs e)
+        {
+            Excel.Application exApp = new Excel.Application();
+            exApp.Workbooks.Add();
+            Worksheet workSheet = (Worksheet)exApp.ActiveSheet;
+            workSheet.Cells[1, 1] = "№ п/п";
+            workSheet.Cells[1, 2] = "Муниципалитет";
+            workSheet.Cells[1, 3] = "ФИО ученика";
+            workSheet.Cells[1, 4] = "Дата рождения";
+            workSheet.Cells[1, 5] = "Класс";
+            workSheet.Cells[1, 6] = "ОО";
+            workSheet.Cells[1, 7] = "Адрес ОО";
+            workSheet.Cells[1, 8] = "Балл";
+            workSheet.Cells[1, 9] = "Статус";
+            workSheet.Cells[1, 10] = "Непонятный столбец";
+            workSheet.Cells[1, 11] = "ФИО наставника";
+
+            int rowExcel = 2;
+            for (int i = 0; i < dataGridView.Rows.Count; i++)
+            {
+                workSheet.Cells[rowExcel, "A"] = dataGridView.Rows[i].Cells[0].Value;
+                workSheet.Cells[rowExcel, "B"] = dataGridView.Rows[i].Cells[1].Value;
+                workSheet.Cells[rowExcel, "C"] = dataGridView.Rows[i].Cells[2].Value;
+                workSheet.Cells[rowExcel, "D"] = dataGridView.Rows[i].Cells[3].Value;
+                workSheet.Cells[rowExcel, "E"] = dataGridView.Rows[i].Cells[4].Value;
+                workSheet.Cells[rowExcel, "F"] = dataGridView.Rows[i].Cells[5].Value;
+                workSheet.Cells[rowExcel, "G"] = dataGridView.Rows[i].Cells[6].Value;
+                workSheet.Cells[rowExcel, "H"] = dataGridView.Rows[i].Cells[7].Value;
+                workSheet.Cells[rowExcel, "I"] = dataGridView.Rows[i].Cells[8].Value;
+                workSheet.Cells[rowExcel, "J"] = dataGridView.Rows[i].Cells[9].Value;
+                workSheet.Cells[rowExcel, "K"] = dataGridView.Rows[i].Cells[10].Value;
+                rowExcel++;
+            }
+
+            string location = Environment.CurrentDirectory;
+            location = location.Remove(location.Length - 29, 29);
+            location = location.Insert(location.Length, "Отчёт.xlsx");
+            exApp.Visible = true;
         }
     }
 }
