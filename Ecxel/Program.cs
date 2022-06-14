@@ -17,6 +17,7 @@ namespace Ecxel
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Form1.openFile();
             Application.Run(new Form1());
         }
     }
