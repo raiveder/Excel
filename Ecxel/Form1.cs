@@ -300,7 +300,10 @@ namespace Ecxel
                 cb_uchenik.Items.Add(dataGridView[2, i].Value);
             }
         }
+        private void ofofof()
+        {
 
+        }
         private void btn_open_Click(object sender, EventArgs e)
         {
             Excel.Application exApp = new Excel.Application();
