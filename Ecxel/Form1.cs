@@ -8,6 +8,7 @@ using ExcelDataReader;
 using System.Linq;
 using Microsoft.Office.Interop.Excel;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Diagnostics;
 
 namespace Ecxel
 {
@@ -21,15 +22,15 @@ namespace Ecxel
         private string fileName = string.Empty;
         private DataTableCollection tableCollection = null;
         int count;
-        SD.DataTable table;
         static FileStream stream;
+        Process proc;
 
         private void Form1_Load(object sender, EventArgs e)
         {
             //try
             //{
             openExcelFile();
-            table = tableCollection["лист"];
+            SD.DataTable table = tableCollection["лист"];
             dataGridView.DataSource = table;
             //foreach (DataGridViewColumn column in dataGridView.Columns)
             //{
@@ -45,6 +46,7 @@ namespace Ecxel
             fillUchenik();
             fillNast();
             cb_pol.Items.Add("");
+            cb_pol.Items.Add("Не указано");
             cb_pol.Items.Add("Мужской");
             cb_pol.Items.Add("Женский");
             // }
@@ -81,9 +83,19 @@ namespace Ecxel
         private void fillOkrug()
         {
             cb_okrug.Items.Add("");
+            cb_okrug.Items.Add("Не указано");
+
+            bool check;
+
             for (int i = 0; i < count; i++)
             {
-                bool check = false;
+                check = false;
+
+                if (Convert.ToString(dataGridView[1, i].Value) == "")
+                {
+                    continue;
+                }
+
                 for (int j = 0; j < cb_okrug.Items.Count; j++)
                 {
                     if (Convert.ToString(cb_okrug.Items[j]).ToLower() == Convert.ToString(dataGridView[1, i].Value).ToLower())
@@ -106,18 +118,23 @@ namespace Ecxel
         private void fillClass()
         {
             cb_class.Items.Add("");
+            cb_class.Items.Add("Не указано");
+
+            bool check;
+
             for (int i = 0; i < count; i++)
             {
-                bool check = false;
+                check = false;
+
+                if (Convert.ToString(dataGridView[4, i].Value) == "")
+                {
+                    continue;
+                }
+
                 int.TryParse(string.Join("", Convert.ToString(dataGridView[4, i].Value).Where(c => char.IsDigit(c))), out int klass); //Запись в klass только цифры из названия класса
 
-                for (int j = 0; j < cb_class.Items.Count; j++)
+                for (int j = 2; j < cb_class.Items.Count; j++)
                 {
-                    if (j == 0)
-                    {
-                        continue;
-                    }
-
                     if (Convert.ToInt32(cb_class.Items[j]) == klass)
                     {
                         check = true;
@@ -139,9 +156,19 @@ namespace Ecxel
         private void fillOrganiz()
         {
             cb_organiz.Items.Add("");
+            cb_organiz.Items.Add("Не указано");
+
+            bool check;
+
             for (int i = 0; i < count; i++)
             {
-                bool check = false;
+                check = false;
+
+                if (Convert.ToString(dataGridView[5, i].Value) == "")
+                {
+                    continue;
+                }
+
                 for (int j = 0; j < cb_organiz.Items.Count; j++)
                 {
                     if (Convert.ToString(cb_organiz.Items[j]).ToLower() == Convert.ToString(dataGridView[5, i].Value).ToLower())
@@ -150,6 +177,7 @@ namespace Ecxel
                         break;
                     }
                 }
+
                 if (check)
                 {
                     continue;
@@ -164,31 +192,22 @@ namespace Ecxel
         private void fillStatus()
         {
             cb_status.Items.Add("");
+            cb_status.Items.Add("Не указано");
 
-            bool unspecified = false;
-            bool unspecifiedFill = true;
+            bool check;
 
             for (int i = 0; i < count; i++)
             {
-                bool check = false;
+                check = false;
 
-                if (Convert.ToString(dataGridView[8, i].Value) == "" && unspecifiedFill)
+                if (Convert.ToString(dataGridView[8, i].Value) == "")
                 {
-                    unspecified = true;
+                    continue;
                 }
 
                 for (int j = 0; j < cb_status.Items.Count; j++)
                 {
-                    if (unspecified)
-                    {
-                        cb_status.Items.Add("Не указано");
-                        check = true;
-                        unspecified = false;
-                        unspecifiedFill = false;
-                        break;
-                    }
-
-                    if (Convert.ToString(cb_status.Items[j]).ToLower() == Convert.ToString(dataGridView[8, i].Value).ToLower())
+                    if (Convert.ToString(cb_status.Items[j]) == Convert.ToString(dataGridView[8, i].Value))
                     {
                         check = true;
                         break;
@@ -209,6 +228,7 @@ namespace Ecxel
         private void fillUchenik()
         {
             cb_uchenik.Items.Add("");
+            cb_uchenik.Items.Add("Не указано");
             for (int i = 0; i < count; i++)
             {
                 cb_uchenik.Items.Add(dataGridView[2, i].Value);
@@ -218,31 +238,22 @@ namespace Ecxel
         private void fillNast()
         {
             cb_nastavnik.Items.Add("");
+            cb_nastavnik.Items.Add("Не указано");
 
-            bool unspecified = false;
-            bool unspecifiedFill = true;
+            bool check;
 
             for (int i = 0; i < count; i++)
             {
-                bool check = false;
+                check = false;
 
-                if (Convert.ToString(dataGridView[10, i].Value) == "" && unspecifiedFill)
+                if (Convert.ToString(dataGridView[9, i].Value) == "")
                 {
-                    unspecified = true;
+                    continue;
                 }
 
                 for (int j = 0; j < cb_nastavnik.Items.Count; j++)
                 {
-                    if (unspecified)
-                    {
-                        cb_nastavnik.Items.Add("Не указано");
-                        check = true;
-                        unspecified = false;
-                        unspecifiedFill = false;
-                        break;
-                    }
-
-                    if (Convert.ToString(cb_nastavnik.Items[j]).ToLower() == Convert.ToString(dataGridView[10, i].Value).ToLower())
+                    if (Convert.ToString(cb_nastavnik.Items[j]) == Convert.ToString(dataGridView[9, i].Value))
                     {
                         check = true;
                         break;
@@ -255,7 +266,7 @@ namespace Ecxel
                 }
                 else
                 {
-                    cb_nastavnik.Items.Add(dataGridView[10, i].Value);
+                    cb_nastavnik.Items.Add(dataGridView[9, i].Value);
                 }
             }
         }
@@ -263,6 +274,7 @@ namespace Ecxel
         private void btn_open_Click(object sender, EventArgs e)
         {
             Excel.Application exApp = new Excel.Application();
+            proc = Process.GetProcessesByName("EXCEL").Last();
             exApp.Workbooks.Add();
             Worksheet workSheet = (Worksheet)exApp.ActiveSheet;
             workSheet.Cells[1, 1] = "№ п/п";
@@ -274,8 +286,8 @@ namespace Ecxel
             workSheet.Cells[1, 7] = "Адрес ОО";
             workSheet.Cells[1, 8] = "Балл";
             workSheet.Cells[1, 9] = "Статус";
-            workSheet.Cells[1, 10] = "Непонятный столбец";
-            workSheet.Cells[1, 11] = "ФИО наставника";
+            workSheet.Cells[1, 10] = "ФИО наставника";
+            workSheet.Cells[1, 11] = "Пол";
 
             int rowExcel = 2;
             for (int i = 0; i < dataGridView.Rows.Count; i++)
@@ -299,116 +311,159 @@ namespace Ecxel
         private void btn_find_Click(object sender, EventArgs e)
         {
             openExcelFile();
-            table = tableCollection["лист"];
+            SD.DataTable table = tableCollection["лист"];
             dataGridView.DataSource = table;
 
-            for (int i = dataGridView.Rows.Count - 1; i >= 0; i--)
-            {
-                if (cb_okrug.Text == "")
-                {
-                    break;
-                }
-
-                if (Convert.ToString(dataGridView[1, i].Value) != cb_okrug.Text)
-                {
-                    dataGridView.Rows.RemoveAt(i);
-                }
-            }
+            bool okrug;
+            bool klass;
+            bool organiz;
+            bool status;
+            bool uchenik;
+            bool nastavnik;
+            bool pol;
 
             for (int i = dataGridView.Rows.Count - 1; i >= 0; i--)
             {
-                if (cb_uchenik.Text == "")
+                okrug = false;
+                klass = false;
+                organiz = false;
+                status = false;
+                uchenik = false;
+                nastavnik = false;
+                pol = false;
+
+                if (cb_okrug.Text == "Не указано")
                 {
-                    break;
+                    if (Convert.ToString(dataGridView[1, i].Value) != "")
+                    {
+                        okrug = true;
+                    }
+                }
+                else if (cb_okrug.Text == "")
+                {
+
+                }
+                else if (Convert.ToString(dataGridView[1, i].Value) != cb_okrug.Text)
+                {
+                    okrug = true;
                 }
 
-                if (Convert.ToString(dataGridView[2, i].Value) != cb_uchenik.Text)
+                if (cb_class.Text == "Не указано")
                 {
-                    dataGridView.Rows.RemoveAt(i);
+                    if (Convert.ToString(dataGridView[4, i].Value) != "")
+                    {
+                        klass = true;
+                    }
                 }
-            }
-
-            for (int i = dataGridView.Rows.Count - 1; i >= 0; i--)
-            {
-                if (cb_class.Text == "")
+                else if (cb_class.Text == "")
                 {
-                    break;
+
                 }
-
-                if (Convert.ToString(dataGridView[4, i].Value) != cb_class.Text)
+                else if (Convert.ToString(dataGridView[4, i].Value) != cb_class.Text)
                 {
-                    dataGridView.Rows.RemoveAt(i);
-                }
-            }
-
-            for (int i = dataGridView.Rows.Count - 1; i >= 0; i--)
-            {
-                if (cb_organiz.Text == "")
-                {
-                    break;
+                    klass = true;
                 }
 
-                if (Convert.ToString(dataGridView[5, i].Value) != cb_organiz.Text)
+                if (cb_organiz.Text == "Не указано")
                 {
-                    dataGridView.Rows.RemoveAt(i);
+                    if (Convert.ToString(dataGridView[5, i].Value) != "")
+                    {
+                        organiz = true;
+                    }
                 }
-            }
-
-            for (int i = dataGridView.Rows.Count - 1; i >= 0; i--)
-            {
-                if (cb_status.Text == "")
+                else if (cb_organiz.Text == "")
                 {
-                    break;
+
+                }
+                else if (Convert.ToString(dataGridView[5, i].Value) != cb_organiz.Text)
+                {
+                    organiz = true;
                 }
 
-                if (Convert.ToString(dataGridView[8, i].Value) != cb_status.Text)
+                if (cb_status.Text == "Не указано")
                 {
-                    dataGridView.Rows.RemoveAt(i);
+                    if (Convert.ToString(dataGridView[8, i].Value) != "")
+                    {
+                        status = true;
+                    }
                 }
-            }
-
-            for (int i = dataGridView.Rows.Count - 1; i >= 0; i--)
-            {
-                if (cb_nastavnik.Text == "")
+                else if (cb_status.Text == "")
                 {
-                    break;
+
+                }
+                else if (Convert.ToString(dataGridView[8, i].Value) != cb_status.Text)
+                {
+                    status = true;
+                }
+
+                if (cb_uchenik.Text == "Не указано")
+                {
+                    if (Convert.ToString(dataGridView[2, i].Value) != "")
+                    {
+                        uchenik = true;
+                    }
+                }
+                else if (cb_uchenik.Text == "")
+                {
+
+                }
+                else if (Convert.ToString(dataGridView[2, i].Value) != cb_uchenik.Text)
+                {
+                    uchenik = true;
                 }
 
                 if (cb_nastavnik.Text == "Не указано")
                 {
-                    if (Convert.ToString(dataGridView[10, i].Value) != "")
+                    if (Convert.ToString(dataGridView[9, i].Value) != "")
                     {
-                        dataGridView.Rows.RemoveAt(i);
+                        nastavnik = true;
                     }
                 }
-                else if(Convert.ToString(dataGridView[10, i].Value) != cb_nastavnik.Text)
+                else if (cb_nastavnik.Text == "")
+                {
+
+                }
+                else if (Convert.ToString(dataGridView[9, i].Value) != cb_nastavnik.Text)
+                {
+                    nastavnik = true;
+                }
+
+                if (cb_pol.Text == "Не указано")
+                {
+                    if (Convert.ToString(dataGridView[10, i].Value) != "")
+                    {
+                        pol = true;
+                    }
+                }
+                else if (cb_pol.Text == "")
+                {
+
+                }
+                else if (cb_pol.Text == "Мужской")
+                {
+                    if (Convert.ToString(dataGridView[10, i].Value) != "м")
+                    {
+                        pol = true;
+                    }
+                }
+                else if (cb_pol.Text == "Женский")
+                {
+                    if (Convert.ToString(dataGridView[10, i].Value) != "ж")
+                    {
+                        pol = true;
+                    }
+                }
+
+                if (okrug || klass || organiz || status || uchenik || nastavnik || pol)
                 {
                     dataGridView.Rows.RemoveAt(i);
                 }
             }
+        }
 
-            for (int i = dataGridView.Rows.Count - 1; i >= 0; i--)
-            {
-                if (cb_pol.Text == "")
-                {
-                    break;
-                }
-
-                if (cb_pol.Text == "Мужской")
-                {
-                    if (Convert.ToString(dataGridView[11, i].Value) != "м")
-                    {
-                        dataGridView.Rows.RemoveAt(i);
-                    }
-                }
-                else
-                {
-                    if (Convert.ToString(dataGridView[11, i].Value) != "ж")
-                    {
-                        dataGridView.Rows.RemoveAt(i);
-                    }
-                }
-            }
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            proc.Kill();
         }
     }
 }
