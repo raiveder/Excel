@@ -55,22 +55,22 @@ namespace Ecxel
             this.dataGridView.AllowUserToDeleteRows = false;
             this.dataGridView.BackgroundColor = System.Drawing.Color.PapayaWhip;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView.Location = new System.Drawing.Point(13, 611);
-            this.dataGridView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.dataGridView.Location = new System.Drawing.Point(20, 238);
+            this.dataGridView.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.ReadOnly = true;
+            this.dataGridView.RowHeadersVisible = false;
             this.dataGridView.RowHeadersWidth = 51;
-            this.dataGridView.Size = new System.Drawing.Size(1882, 340);
+            this.dataGridView.Size = new System.Drawing.Size(1506, 539);
             this.dataGridView.TabIndex = 0;
             // 
             // lb_class
             // 
             this.lb_class.AutoSize = true;
             this.lb_class.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lb_class.Location = new System.Drawing.Point(470, 436);
-            this.lb_class.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lb_class.Location = new System.Drawing.Point(693, 135);
             this.lb_class.Name = "lb_class";
-            this.lb_class.Size = new System.Drawing.Size(95, 33);
+            this.lb_class.Size = new System.Drawing.Size(77, 27);
             this.lb_class.TabIndex = 1;
             this.lb_class.Text = "Класс";
             // 
@@ -78,10 +78,10 @@ namespace Ecxel
             // 
             this.cb_class.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cb_class.FormattingEnabled = true;
-            this.cb_class.Location = new System.Drawing.Point(566, 431);
-            this.cb_class.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cb_class.Location = new System.Drawing.Point(776, 131);
+            this.cb_class.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cb_class.Name = "cb_class";
-            this.cb_class.Size = new System.Drawing.Size(172, 41);
+            this.cb_class.Size = new System.Drawing.Size(138, 35);
             this.cb_class.Sorted = true;
             this.cb_class.TabIndex = 2;
             // 
@@ -89,10 +89,10 @@ namespace Ecxel
             // 
             this.cb_okrug.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cb_okrug.FormattingEnabled = true;
-            this.cb_okrug.Location = new System.Drawing.Point(18, 300);
-            this.cb_okrug.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cb_okrug.Location = new System.Drawing.Point(209, 185);
+            this.cb_okrug.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cb_okrug.Name = "cb_okrug";
-            this.cb_okrug.Size = new System.Drawing.Size(362, 41);
+            this.cb_okrug.Size = new System.Drawing.Size(473, 35);
             this.cb_okrug.Sorted = true;
             this.cb_okrug.TabIndex = 4;
             // 
@@ -100,10 +100,9 @@ namespace Ecxel
             // 
             this.lb_okrug.AutoSize = true;
             this.lb_okrug.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lb_okrug.Location = new System.Drawing.Point(-1, 259);
-            this.lb_okrug.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lb_okrug.Location = new System.Drawing.Point(20, 193);
             this.lb_okrug.Name = "lb_okrug";
-            this.lb_okrug.Size = new System.Drawing.Size(222, 33);
+            this.lb_okrug.Size = new System.Drawing.Size(183, 27);
             this.lb_okrug.TabIndex = 3;
             this.lb_okrug.Text = "Муниципалитет";
             // 
@@ -111,10 +110,10 @@ namespace Ecxel
             // 
             this.cb_uchenik.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cb_uchenik.FormattingEnabled = true;
-            this.cb_uchenik.Location = new System.Drawing.Point(636, 29);
-            this.cb_uchenik.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cb_uchenik.Location = new System.Drawing.Point(209, 77);
+            this.cb_uchenik.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cb_uchenik.Name = "cb_uchenik";
-            this.cb_uchenik.Size = new System.Drawing.Size(704, 41);
+            this.cb_uchenik.Size = new System.Drawing.Size(473, 35);
             this.cb_uchenik.Sorted = true;
             this.cb_uchenik.TabIndex = 6;
             // 
@@ -122,10 +121,9 @@ namespace Ecxel
             // 
             this.lb_uchenik.AutoSize = true;
             this.lb_uchenik.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lb_uchenik.Location = new System.Drawing.Point(479, 41);
-            this.lb_uchenik.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lb_uchenik.Location = new System.Drawing.Point(20, 85);
             this.lb_uchenik.Name = "lb_uchenik";
-            this.lb_uchenik.Size = new System.Drawing.Size(109, 33);
+            this.lb_uchenik.Size = new System.Drawing.Size(90, 27);
             this.lb_uchenik.TabIndex = 5;
             this.lb_uchenik.Text = "Ученик";
             // 
@@ -133,10 +131,10 @@ namespace Ecxel
             // 
             this.cb_organiz.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cb_organiz.FormattingEnabled = true;
-            this.cb_organiz.Location = new System.Drawing.Point(566, 509);
-            this.cb_organiz.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cb_organiz.Location = new System.Drawing.Point(880, 77);
+            this.cb_organiz.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cb_organiz.Name = "cb_organiz";
-            this.cb_organiz.Size = new System.Drawing.Size(654, 41);
+            this.cb_organiz.Size = new System.Drawing.Size(564, 35);
             this.cb_organiz.Sorted = true;
             this.cb_organiz.TabIndex = 14;
             // 
@@ -144,10 +142,9 @@ namespace Ecxel
             // 
             this.lb_organiz.AutoSize = true;
             this.lb_organiz.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lb_organiz.Location = new System.Drawing.Point(366, 514);
-            this.lb_organiz.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lb_organiz.Location = new System.Drawing.Point(693, 85);
             this.lb_organiz.Name = "lb_organiz";
-            this.lb_organiz.Size = new System.Drawing.Size(190, 33);
+            this.lb_organiz.Size = new System.Drawing.Size(156, 27);
             this.lb_organiz.TabIndex = 13;
             this.lb_organiz.Text = "Организация";
             // 
@@ -155,10 +152,10 @@ namespace Ecxel
             // 
             this.cb_status.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cb_status.FormattingEnabled = true;
-            this.cb_status.Location = new System.Drawing.Point(566, 560);
-            this.cb_status.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cb_status.Location = new System.Drawing.Point(1026, 132);
+            this.cb_status.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cb_status.Name = "cb_status";
-            this.cb_status.Size = new System.Drawing.Size(172, 41);
+            this.cb_status.Size = new System.Drawing.Size(175, 35);
             this.cb_status.Sorted = true;
             this.cb_status.TabIndex = 20;
             // 
@@ -166,10 +163,9 @@ namespace Ecxel
             // 
             this.lb_status.AutoSize = true;
             this.lb_status.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lb_status.Location = new System.Drawing.Point(409, 565);
-            this.lb_status.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lb_status.Location = new System.Drawing.Point(933, 135);
             this.lb_status.Name = "lb_status";
-            this.lb_status.Size = new System.Drawing.Size(105, 33);
+            this.lb_status.Size = new System.Drawing.Size(87, 27);
             this.lb_status.TabIndex = 19;
             this.lb_status.Text = "Статус";
             // 
@@ -177,10 +173,10 @@ namespace Ecxel
             // 
             this.cb_nastavnik.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cb_nastavnik.FormattingEnabled = true;
-            this.cb_nastavnik.Location = new System.Drawing.Point(636, 129);
-            this.cb_nastavnik.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cb_nastavnik.Location = new System.Drawing.Point(209, 131);
+            this.cb_nastavnik.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cb_nastavnik.Name = "cb_nastavnik";
-            this.cb_nastavnik.Size = new System.Drawing.Size(704, 41);
+            this.cb_nastavnik.Size = new System.Drawing.Size(473, 35);
             this.cb_nastavnik.Sorted = true;
             this.cb_nastavnik.TabIndex = 22;
             // 
@@ -188,21 +184,21 @@ namespace Ecxel
             // 
             this.lb_nastavnik.AutoSize = true;
             this.lb_nastavnik.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lb_nastavnik.Location = new System.Drawing.Point(439, 129);
-            this.lb_nastavnik.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lb_nastavnik.Location = new System.Drawing.Point(20, 139);
             this.lb_nastavnik.Name = "lb_nastavnik";
-            this.lb_nastavnik.Size = new System.Drawing.Size(156, 33);
+            this.lb_nastavnik.Size = new System.Drawing.Size(128, 27);
             this.lb_nastavnik.TabIndex = 21;
             this.lb_nastavnik.Text = "Наставник";
             // 
             // btn_open
             // 
             this.btn_open.BackColor = System.Drawing.Color.NavajoWhite;
-            this.btn_open.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_open.Location = new System.Drawing.Point(18, 20);
-            this.btn_open.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_open.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btn_open.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btn_open.Location = new System.Drawing.Point(14, 11);
+            this.btn_open.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btn_open.Name = "btn_open";
-            this.btn_open.Size = new System.Drawing.Size(242, 59);
+            this.btn_open.Size = new System.Drawing.Size(216, 47);
             this.btn_open.TabIndex = 32;
             this.btn_open.Text = "Открыть в Excel";
             this.btn_open.UseVisualStyleBackColor = false;
@@ -211,11 +207,12 @@ namespace Ecxel
             // btn_find
             // 
             this.btn_find.BackColor = System.Drawing.Color.NavajoWhite;
-            this.btn_find.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_find.Location = new System.Drawing.Point(45, 394);
-            this.btn_find.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_find.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btn_find.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btn_find.Location = new System.Drawing.Point(1247, 183);
+            this.btn_find.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btn_find.Name = "btn_find";
-            this.btn_find.Size = new System.Drawing.Size(242, 59);
+            this.btn_find.Size = new System.Drawing.Size(197, 47);
             this.btn_find.TabIndex = 33;
             this.btn_find.Text = "Поиск";
             this.btn_find.UseVisualStyleBackColor = false;
@@ -225,10 +222,10 @@ namespace Ecxel
             // 
             this.cb_pol.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cb_pol.FormattingEnabled = true;
-            this.cb_pol.Location = new System.Drawing.Point(944, 558);
-            this.cb_pol.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cb_pol.Location = new System.Drawing.Point(1306, 132);
+            this.cb_pol.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cb_pol.Name = "cb_pol";
-            this.cb_pol.Size = new System.Drawing.Size(172, 41);
+            this.cb_pol.Size = new System.Drawing.Size(138, 35);
             this.cb_pol.Sorted = true;
             this.cb_pol.TabIndex = 35;
             // 
@@ -236,19 +233,18 @@ namespace Ecxel
             // 
             this.lb_pol.AutoSize = true;
             this.lb_pol.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lb_pol.Location = new System.Drawing.Point(787, 563);
-            this.lb_pol.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lb_pol.Location = new System.Drawing.Point(1227, 134);
             this.lb_pol.Name = "lb_pol";
-            this.lb_pol.Size = new System.Drawing.Size(68, 33);
+            this.lb_pol.Size = new System.Drawing.Size(55, 27);
             this.lb_pol.TabIndex = 34;
             this.lb_pol.Text = "Пол";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PapayaWhip;
-            this.ClientSize = new System.Drawing.Size(1924, 1050);
+            this.ClientSize = new System.Drawing.Size(1547, 840);
             this.Controls.Add(this.cb_pol);
             this.Controls.Add(this.lb_pol);
             this.Controls.Add(this.btn_find);
@@ -266,8 +262,9 @@ namespace Ecxel
             this.Controls.Add(this.cb_class);
             this.Controls.Add(this.lb_class);
             this.Controls.Add(this.dataGridView);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
