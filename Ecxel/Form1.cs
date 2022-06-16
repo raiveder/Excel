@@ -481,5 +481,40 @@ namespace Ecxel
         {
             proc.Kill();
         }
+
+        private void cb_uchenik_Click(object sender, EventArgs e)
+        {
+            cb_uchenik.DroppedDown = true;
+        }
+
+        private void cb_nastavnik_Click(object sender, EventArgs e)
+        {
+            cb_nastavnik.DroppedDown = true;
+        }
+
+        private void cb_okrug_Click(object sender, EventArgs e)
+        {
+            cb_okrug.DroppedDown = true;
+        }
+
+        private void cb_organiz_Click(object sender, EventArgs e)
+        {
+            cb_organiz.DroppedDown = true;
+        }
+
+        private void cb_class_Click(object sender, EventArgs e)
+        {
+            cb_class.DroppedDown = true;
+        }
+
+        private void cb_status_Click(object sender, EventArgs e)
+        {
+            cb_status.DroppedDown = true;
+        }
+
+        private void cb_pol_Click(object sender, EventArgs e)
+        {
+            cb_pol.DroppedDown = true;
+        }
     }
 }

@@ -84,6 +84,7 @@ namespace Ecxel
             this.cb_class.Name = "cb_class";
             this.cb_class.Size = new System.Drawing.Size(121, 30);
             this.cb_class.TabIndex = 2;
+            this.cb_class.Click += new System.EventHandler(this.cb_class_Click);
             // 
             // cb_okrug
             // 
@@ -96,6 +97,7 @@ namespace Ecxel
             this.cb_okrug.Name = "cb_okrug";
             this.cb_okrug.Size = new System.Drawing.Size(414, 30);
             this.cb_okrug.TabIndex = 4;
+            this.cb_okrug.Click += new System.EventHandler(this.cb_okrug_Click);
             // 
             // lb_okrug
             // 
@@ -118,6 +120,7 @@ namespace Ecxel
             this.cb_uchenik.Name = "cb_uchenik";
             this.cb_uchenik.Size = new System.Drawing.Size(414, 30);
             this.cb_uchenik.TabIndex = 6;
+            this.cb_uchenik.Click += new System.EventHandler(this.cb_uchenik_Click);
             // 
             // lb_uchenik
             // 
@@ -140,6 +143,7 @@ namespace Ecxel
             this.cb_organiz.Name = "cb_organiz";
             this.cb_organiz.Size = new System.Drawing.Size(494, 30);
             this.cb_organiz.TabIndex = 14;
+            this.cb_organiz.Click += new System.EventHandler(this.cb_organiz_Click);
             // 
             // lb_organiz
             // 
@@ -162,6 +166,7 @@ namespace Ecxel
             this.cb_status.Name = "cb_status";
             this.cb_status.Size = new System.Drawing.Size(154, 30);
             this.cb_status.TabIndex = 20;
+            this.cb_status.Click += new System.EventHandler(this.cb_status_Click);
             // 
             // lb_status
             // 
@@ -184,6 +189,7 @@ namespace Ecxel
             this.cb_nastavnik.Name = "cb_nastavnik";
             this.cb_nastavnik.Size = new System.Drawing.Size(414, 30);
             this.cb_nastavnik.TabIndex = 22;
+            this.cb_nastavnik.Click += new System.EventHandler(this.cb_nastavnik_Click);
             // 
             // lb_nastavnik
             // 
@@ -232,6 +238,7 @@ namespace Ecxel
             this.cb_pol.Name = "cb_pol";
             this.cb_pol.Size = new System.Drawing.Size(121, 30);
             this.cb_pol.TabIndex = 35;
+            this.cb_pol.Click += new System.EventHandler(this.cb_pol_Click);
             // 
             // lb_pol
             // 
