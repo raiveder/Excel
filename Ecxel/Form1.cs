@@ -27,16 +27,13 @@ namespace Ecxel
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //try
-            //{
             openExcelFile();
             SD.DataTable table = tableCollection["лист"];
             dataGridView.DataSource = table;
-            //foreach (DataGridViewColumn column in dataGridView.Columns)
-            //{
-            //    column.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            //}
-            //dataGridView.Columns.RemoveAt(1);
+            foreach (DataGridViewColumn column in dataGridView.Columns)
+            {
+                column.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            }
 
             count = dataGridView.Rows.Count - 1;
             fillOkrug();
@@ -49,21 +46,30 @@ namespace Ecxel
             cb_pol.Items.Add("Не указано");
             cb_pol.Items.Add("Мужской");
             cb_pol.Items.Add("Женский");
-            // }
-            //catch
-            //{
-            //MessageBox.Show();
-            // }
         }
 
         public static void openFile()
         {
-            string path = Environment.CurrentDirectory;
-            path = path.Substring(0, path.Length - 23);
-            path += "Таблица.xlsx";
+            string path = string.Empty;
+            try
+            {
+                path = Environment.CurrentDirectory;
+                path = path.Substring(0, path.Length - 23);
+                path += "Таблица.xlsx";
 
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            stream = File.Open(path, FileMode.Open, FileAccess.Read);
+                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                stream = File.Open(path, FileMode.Open, FileAccess.Read);
+            }
+            catch (FileNotFoundException)
+            {
+                MessageBox.Show($"Файл 'Таблица.xlsx' не найден. Проверьте наличие данного файла по следующему пути:\n{path}");
+                Process.GetCurrentProcess().Kill();
+            }
+            catch (IOException)
+            {
+                MessageBox.Show("Закройте файл 'Таблица.xlsx'\nи запустите приложение повторно");
+                Process.GetCurrentProcess().Kill();
+            }
         }
 
         private void openExcelFile()
@@ -187,6 +193,16 @@ namespace Ecxel
                     cb_organiz.Items.Add(dataGridView[5, i].Value);
                 }
             }
+
+            int width = cb_organiz.Items[0].ToString().Length;
+            foreach (var item in cb_organiz.Items)
+            {
+                if (item.ToString().Length > width)
+                {
+                    width = item.ToString().Length;
+                }
+            }
+            cb_organiz.Size = new System.Drawing.Size(Convert.ToInt32(width * 10.5), 30);
         }
 
         private void fillStatus()
