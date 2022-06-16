@@ -90,9 +90,9 @@ namespace Ecxel
 
         private void fillOkrug()
         {
-            cb_okrug.Items.Add("");
-            cb_okrug.Items.Add("Не указано");
-
+            string[] array = new string[2];
+            array[0] = "";
+            array[1] = "Не указано";
             bool check;
 
             for (int i = 0; i < count; i++)
@@ -104,9 +104,9 @@ namespace Ecxel
                     continue;
                 }
 
-                for (int j = 0; j < cb_okrug.Items.Count; j++)
+                for (int j = 0; j < array.Length; j++)
                 {
-                    if (Convert.ToString(cb_okrug.Items[j]).ToLower() == Convert.ToString(dataGridView[1, i].Value).ToLower())
+                    if (Convert.ToString(array[j]).ToLower() == Convert.ToString(dataGridView[1, i].Value).ToLower())
                     {
                         check = true;
                         break;
@@ -118,16 +118,23 @@ namespace Ecxel
                 }
                 else
                 {
-                    cb_okrug.Items.Add(dataGridView[1, i].Value);
+                    Array.Resize(ref array, array.Length + 1);
+                    array[array.Length - 1] = Convert.ToString(dataGridView[1, i].Value);
                 }
+            }
+
+            Array.Sort(array, 2, array.Length - 2);
+            foreach (string item in array)
+            {
+                cb_okrug.Items.Add(item);
             }
         }
 
         private void fillClass()
         {
-            cb_class.Items.Add("");
-            cb_class.Items.Add("Не указано");
-
+            string[] array = new string[2];
+            array[0] = "";
+            array[1] = "Не указано";
             bool check;
 
             for (int i = 0; i < count; i++)
@@ -141,9 +148,9 @@ namespace Ecxel
 
                 int.TryParse(string.Join("", Convert.ToString(dataGridView[4, i].Value).Where(c => char.IsDigit(c))), out int klass); //Запись в klass только цифры из названия класса
 
-                for (int j = 2; j < cb_class.Items.Count; j++)
+                for (int j = 2; j < array.Length; j++)
                 {
-                    if (Convert.ToInt32(cb_class.Items[j]) == klass)
+                    if (Convert.ToInt32(array[j]) == klass)
                     {
                         check = true;
                         break;
@@ -156,15 +163,23 @@ namespace Ecxel
                 }
                 else
                 {
-                    cb_class.Items.Add(Convert.ToString(klass));
+                    Array.Resize(ref array, array.Length + 1);
+                    array[array.Length - 1] = Convert.ToString(dataGridView[4, i].Value);
                 }
+            }
+
+            Array.Sort(array, 2, array.Length - 2);
+            foreach (string item in array)
+            {
+                cb_class.Items.Add(item);
             }
         }
 
         private void fillOrganiz()
         {
-            cb_organiz.Items.Add("");
-            cb_organiz.Items.Add("Не указано");
+            string[] array = new string[2];
+            array[0] = "";
+            array[1] = "Не указано";
 
             bool check;
 
@@ -177,9 +192,9 @@ namespace Ecxel
                     continue;
                 }
 
-                for (int j = 0; j < cb_organiz.Items.Count; j++)
+                for (int j = 0; j < array.Length; j++)
                 {
-                    if (Convert.ToString(cb_organiz.Items[j]).ToLower() == Convert.ToString(dataGridView[5, i].Value).ToLower())
+                    if (Convert.ToString(array[j]).ToLower() == Convert.ToString(dataGridView[5, i].Value).ToLower())
                     {
                         check = true;
                         break;
@@ -192,8 +207,15 @@ namespace Ecxel
                 }
                 else
                 {
-                    cb_organiz.Items.Add(dataGridView[5, i].Value);
+                    Array.Resize(ref array, array.Length + 1);
+                    array[array.Length - 1] = Convert.ToString(dataGridView[5, i].Value);
                 }
+            }
+
+            Array.Sort(array, 2, array.Length - 2);
+            foreach (string item in array)
+            {
+                cb_organiz.Items.Add(item);
             }
 
             int width = cb_organiz.Items[0].ToString().Length;
@@ -209,8 +231,9 @@ namespace Ecxel
 
         private void fillStatus()
         {
-            cb_status.Items.Add("");
-            cb_status.Items.Add("Не указано");
+            string[] array = new string[2];
+            array[0] = "";
+            array[1] = "Не указано";
 
             bool check;
 
@@ -223,9 +246,9 @@ namespace Ecxel
                     continue;
                 }
 
-                for (int j = 0; j < cb_status.Items.Count; j++)
+                for (int j = 0; j < array.Length; j++)
                 {
-                    if (Convert.ToString(cb_status.Items[j]) == Convert.ToString(dataGridView[8, i].Value))
+                    if (Convert.ToString(array[j]) == Convert.ToString(dataGridView[8, i].Value))
                     {
                         check = true;
                         break;
@@ -238,25 +261,47 @@ namespace Ecxel
                 }
                 else
                 {
-                    cb_status.Items.Add(dataGridView[8, i].Value);
+                    Array.Resize(ref array, array.Length + 1);
+                    array[array.Length - 1] = Convert.ToString(dataGridView[8, i].Value);
                 }
+            }
+
+            Array.Sort(array, 2, array.Length - 2);
+            foreach (string item in array)
+            {
+                cb_status.Items.Add(item);
             }
         }
 
         private void fillUchenik()
         {
-            cb_uchenik.Items.Add("");
-            cb_uchenik.Items.Add("Не указано");
+            string[] array = new string[2];
+            array[0] = "";
+            array[1] = "Не указано";
+
             for (int i = 0; i < count; i++)
             {
-                cb_uchenik.Items.Add(dataGridView[2, i].Value);
+                if (Convert.ToString(dataGridView[2, i].Value) == "")
+                {
+                    continue;
+                }
+
+                Array.Resize(ref array, array.Length + 1);
+                array[array.Length - 1] = Convert.ToString(dataGridView[2, i].Value);
+            }
+
+            Array.Sort(array, 2, array.Length - 2);
+            foreach (string item in array)
+            {
+                cb_uchenik.Items.Add(item);
             }
         }
 
         private void fillNast()
         {
-            cb_nastavnik.Items.Add("");
-            cb_nastavnik.Items.Add("Не указано");
+            string[] array = new string[2];
+            array[0] = "";
+            array[1] = "Не указано";
 
             bool check;
 
@@ -269,9 +314,9 @@ namespace Ecxel
                     continue;
                 }
 
-                for (int j = 0; j < cb_nastavnik.Items.Count; j++)
+                for (int j = 0; j < array.Length; j++)
                 {
-                    if (Convert.ToString(cb_nastavnik.Items[j]) == Convert.ToString(dataGridView[9, i].Value))
+                    if (Convert.ToString(array[j]) == Convert.ToString(dataGridView[9, i].Value))
                     {
                         check = true;
                         break;
@@ -284,8 +329,15 @@ namespace Ecxel
                 }
                 else
                 {
-                    cb_nastavnik.Items.Add(dataGridView[9, i].Value);
+                    Array.Resize(ref array, array.Length + 1);
+                    array[array.Length - 1] = Convert.ToString(dataGridView[9, i].Value);
                 }
+            }
+
+            Array.Sort(array, 2, array.Length - 2);
+            foreach (string item in array)
+            {
+                cb_nastavnik.Items.Add(item);
             }
         }
 
