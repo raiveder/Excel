@@ -46,6 +46,8 @@ namespace Ecxel
             cb_pol.Items.Add("Не указано");
             cb_pol.Items.Add("Мужской");
             cb_pol.Items.Add("Женский");
+
+            lb_count.Text = "Количество строк: " + dataGridView.Rows.Count;
         }
 
         public static void openFile()
@@ -62,12 +64,12 @@ namespace Ecxel
             }
             catch (FileNotFoundException)
             {
-                MessageBox.Show($"Файл 'Таблица.xlsx' не найден. Проверьте наличие данного файла по следующему пути:\n{path}");
+                MessageBox.Show($"Файл 'Таблица.xlsx' не найден. Проверьте наличие данного файла по следующему пути:\n{path}", "Отсутствие файла данных", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Process.GetCurrentProcess().Kill();
             }
             catch (IOException)
             {
-                MessageBox.Show("Закройте файл 'Таблица.xlsx'\nи запустите приложение повторно");
+                MessageBox.Show("Закройте файл 'Таблица.xlsx'\nи запустите приложение повторно", "Файл данных", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Process.GetCurrentProcess().Kill();
             }
         }
@@ -475,11 +477,23 @@ namespace Ecxel
                     dataGridView.Rows.RemoveAt(i);
                 }
             }
+            
+            if (dataGridView.Rows.Count == 0)
+            {
+                MessageBox.Show("Подходящих данному условию строк не найдено", "Фильтр", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                openExcelFile();
+                table = tableCollection["лист"];
+                dataGridView.DataSource = table;
+            }
+            lb_count.Text = "Количество строк: " + dataGridView.Rows.Count;
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            proc.Kill();
+            if (proc != null)
+            {
+                proc.Kill();
+            }
         }
 
         private void cb_uchenik_Click(object sender, EventArgs e)

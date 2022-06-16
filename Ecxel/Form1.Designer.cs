@@ -46,6 +46,7 @@ namespace Ecxel
             this.btn_find = new System.Windows.Forms.Button();
             this.cb_pol = new System.Windows.Forms.ComboBox();
             this.lb_pol = new System.Windows.Forms.Label();
+            this.lb_count = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -250,12 +251,23 @@ namespace Ecxel
             this.lb_pol.TabIndex = 34;
             this.lb_pol.Text = "Пол";
             // 
+            // lb_count
+            // 
+            this.lb_count.AutoSize = true;
+            this.lb_count.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lb_count.Location = new System.Drawing.Point(731, 167);
+            this.lb_count.Name = "lb_count";
+            this.lb_count.Size = new System.Drawing.Size(165, 22);
+            this.lb_count.TabIndex = 36;
+            this.lb_count.Text = "Количество строк";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PapayaWhip;
             this.ClientSize = new System.Drawing.Size(1354, 558);
+            this.Controls.Add(this.lb_count);
             this.Controls.Add(this.cb_pol);
             this.Controls.Add(this.lb_pol);
             this.Controls.Add(this.btn_find);
@@ -278,6 +290,7 @@ namespace Ecxel
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Excel";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
@@ -304,6 +317,7 @@ namespace Ecxel
         private System.Windows.Forms.Button btn_find;
         private System.Windows.Forms.ComboBox cb_pol;
         private System.Windows.Forms.Label lb_pol;
+        private System.Windows.Forms.Label lb_count;
     }
 }
 
