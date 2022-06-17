@@ -47,6 +47,7 @@ namespace Ecxel
             this.cb_pol = new System.Windows.Forms.ComboBox();
             this.lb_pol = new System.Windows.Forms.Label();
             this.lb_count = new System.Windows.Forms.Label();
+            this.btn_clear = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -205,9 +206,10 @@ namespace Ecxel
             // btn_open
             // 
             this.btn_open.BackColor = System.Drawing.Color.NavajoWhite;
+            this.btn_open.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_open.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btn_open.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_open.Location = new System.Drawing.Point(1164, 103);
+            this.btn_open.Location = new System.Drawing.Point(1164, 111);
             this.btn_open.Name = "btn_open";
             this.btn_open.Size = new System.Drawing.Size(172, 35);
             this.btn_open.TabIndex = 32;
@@ -218,9 +220,10 @@ namespace Ecxel
             // btn_find
             // 
             this.btn_find.BackColor = System.Drawing.Color.NavajoWhite;
+            this.btn_find.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_find.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btn_find.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_find.Location = new System.Drawing.Point(1164, 49);
+            this.btn_find.Location = new System.Drawing.Point(1164, 62);
             this.btn_find.Name = "btn_find";
             this.btn_find.Size = new System.Drawing.Size(172, 35);
             this.btn_find.TabIndex = 33;
@@ -261,12 +264,27 @@ namespace Ecxel
             this.lb_count.TabIndex = 36;
             this.lb_count.Text = "Количество строк";
             // 
+            // btn_clear
+            // 
+            this.btn_clear.BackColor = System.Drawing.Color.NavajoWhite;
+            this.btn_clear.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_clear.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btn_clear.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btn_clear.Location = new System.Drawing.Point(1164, 13);
+            this.btn_clear.Name = "btn_clear";
+            this.btn_clear.Size = new System.Drawing.Size(172, 35);
+            this.btn_clear.TabIndex = 37;
+            this.btn_clear.Text = "Очистить";
+            this.btn_clear.UseVisualStyleBackColor = false;
+            this.btn_clear.Click += new System.EventHandler(this.btn_clear_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PapayaWhip;
             this.ClientSize = new System.Drawing.Size(1354, 558);
+            this.Controls.Add(this.btn_clear);
             this.Controls.Add(this.lb_count);
             this.Controls.Add(this.cb_pol);
             this.Controls.Add(this.lb_pol);
@@ -318,6 +336,7 @@ namespace Ecxel
         private System.Windows.Forms.ComboBox cb_pol;
         private System.Windows.Forms.Label lb_pol;
         private System.Windows.Forms.Label lb_count;
+        private System.Windows.Forms.Button btn_clear;
     }
 }
 

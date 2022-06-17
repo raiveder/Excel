@@ -28,14 +28,10 @@ namespace Ecxel
         private void Form1_Load(object sender, EventArgs e)
         {
             openExcelFile();
-            SD.DataTable table = tableCollection["лист"];
-            dataGridView.DataSource = table;
-            foreach (DataGridViewColumn column in dataGridView.Columns)
-            {
-                column.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            }
-
             count = dataGridView.Rows.Count - 1;
+
+            design();
+
             fillOkrug();
             fillClass();
             fillOrganiz();
@@ -48,6 +44,37 @@ namespace Ecxel
             cb_pol.Items.Add("Женский");
 
             lb_count.Text = "Количество строк: " + dataGridView.Rows.Count;
+        }
+
+        private void design()
+        {
+            int max;
+            for (int i = 0; i < dataGridView.Columns.Count; i++)
+            {
+                max = dataGridView.Columns[i].HeaderText.Length;
+                for (int j = 0; j < dataGridView.Rows.Count; j++)
+                {
+                    if (dataGridView[i, j].Value.ToString().Length > max)
+                    {
+                        max = dataGridView[i, j].Value.ToString().Length;
+                    }
+                }
+                if (max < 6)
+                {
+                    dataGridView.Columns[i].Width = max * 12;
+                }
+                else
+                {
+                    dataGridView.Columns[i].Width = max * 8;
+                }
+            }
+
+            dataGridView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridView.Columns[0].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridView.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridView.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridView.Columns[7].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridView.Columns[10].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
         }
 
         public static void openFile()
@@ -86,6 +113,16 @@ namespace Ecxel
             });
 
             tableCollection = db.Tables;
+            SD.DataTable table = tableCollection["лист"];
+            dataGridView.DataSource = table;
+
+            for (int i = 0; i < dataGridView.Rows.Count; i++)
+            {
+                if (Convert.ToString(dataGridView[3, i].Value) != "")
+                {
+                    dataGridView[3, i].Value = Convert.ToString(dataGridView[3, i].Value).Substring(0, 10);
+                }
+            }
         }
 
         private void fillOkrug()
@@ -347,17 +384,21 @@ namespace Ecxel
             proc = Process.GetProcessesByName("EXCEL").Last();
             exApp.Workbooks.Add();
             Worksheet workSheet = (Worksheet)exApp.ActiveSheet;
-            workSheet.Cells[1, 1] = "№ п/п";
-            workSheet.Cells[1, 2] = "Муниципалитет";
-            workSheet.Cells[1, 3] = "ФИО ученика";
-            workSheet.Cells[1, 4] = "Дата рождения";
-            workSheet.Cells[1, 5] = "Класс";
-            workSheet.Cells[1, 6] = "ОО";
-            workSheet.Cells[1, 7] = "Адрес ОО";
-            workSheet.Cells[1, 8] = "Балл";
-            workSheet.Cells[1, 9] = "Статус";
-            workSheet.Cells[1, 10] = "ФИО наставника";
-            workSheet.Cells[1, 11] = "Пол";
+            for (int i = 0; i < dataGridView.Columns.Count; i++)
+            {
+                workSheet.Cells[1, i + 1] = dataGridView.Columns[i].HeaderText;
+            }
+            //workSheet.Cells[1, 1] = "№ п/п";
+            //workSheet.Cells[1, 2] = "Муниципалитет";
+            //workSheet.Cells[1, 3] = "ФИО ученика";
+            //workSheet.Cells[1, 4] = "Дата рождения";
+            //workSheet.Cells[1, 5] = "Класс";
+            //workSheet.Cells[1, 6] = "ОО";
+            //workSheet.Cells[1, 7] = "Адрес ОО";
+            //workSheet.Cells[1, 8] = "Балл";
+            //workSheet.Cells[1, 9] = "Статус";
+            //workSheet.Cells[1, 10] = "ФИО наставника";
+            //workSheet.Cells[1, 11] = "Пол";
 
             int rowExcel = 2;
             for (int i = 0; i < dataGridView.Rows.Count; i++)
@@ -381,8 +422,6 @@ namespace Ecxel
         private void btn_find_Click(object sender, EventArgs e)
         {
             openExcelFile();
-            SD.DataTable table = tableCollection["лист"];
-            dataGridView.DataSource = table;
 
             bool okrug;
             bool klass;
@@ -534,10 +573,9 @@ namespace Ecxel
             {
                 MessageBox.Show("Подходящих данному условию строк не найдено", "Фильтр", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 openExcelFile();
-                table = tableCollection["лист"];
-                dataGridView.DataSource = table;
             }
             lb_count.Text = "Количество строк: " + dataGridView.Rows.Count;
+            design();
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -581,6 +619,17 @@ namespace Ecxel
         private void cb_pol_Click(object sender, EventArgs e)
         {
             cb_pol.DroppedDown = true;
+        }
+
+        private void btn_clear_Click(object sender, EventArgs e)
+        {
+            cb_class.Text = "";
+            cb_nastavnik.Text = "";
+            cb_okrug.Text = "";
+            cb_organiz.Text = "";
+            cb_pol.Text = "";
+            cb_status.Text = "";
+            cb_uchenik.Text = "";
         }
     }
 }
