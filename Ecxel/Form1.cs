@@ -529,7 +529,7 @@ namespace Ecxel
                     dataGridView.Rows.RemoveAt(i);
                 }
             }
-            
+
             if (dataGridView.Rows.Count == 0)
             {
                 MessageBox.Show("Подходящих данному условию строк не найдено", "Фильтр", MessageBoxButtons.OK, MessageBoxIcon.Information);

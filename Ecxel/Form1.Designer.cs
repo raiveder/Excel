@@ -255,7 +255,7 @@ namespace Ecxel
             // 
             this.lb_count.AutoSize = true;
             this.lb_count.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lb_count.Location = new System.Drawing.Point(731, 167);
+            this.lb_count.Location = new System.Drawing.Point(1128, 157);
             this.lb_count.Name = "lb_count";
             this.lb_count.Size = new System.Drawing.Size(165, 22);
             this.lb_count.TabIndex = 36;
