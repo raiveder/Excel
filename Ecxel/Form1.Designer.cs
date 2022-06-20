@@ -42,12 +42,14 @@ namespace Ecxel
             this.lb_status = new System.Windows.Forms.Label();
             this.cb_nastavnik = new System.Windows.Forms.ComboBox();
             this.lb_nastavnik = new System.Windows.Forms.Label();
-            this.btn_open = new System.Windows.Forms.Button();
+            this.btn_save = new System.Windows.Forms.Button();
             this.btn_find = new System.Windows.Forms.Button();
             this.cb_pol = new System.Windows.Forms.ComboBox();
             this.lb_pol = new System.Windows.Forms.Label();
             this.lb_count = new System.Windows.Forms.Label();
             this.btn_clear = new System.Windows.Forms.Button();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.btn_open = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -204,19 +206,19 @@ namespace Ecxel
             this.lb_nastavnik.TabIndex = 21;
             this.lb_nastavnik.Text = "Наставник";
             // 
-            // btn_open
+            // btn_save
             // 
-            this.btn_open.BackColor = System.Drawing.Color.NavajoWhite;
-            this.btn_open.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_open.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btn_open.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_open.Location = new System.Drawing.Point(1164, 111);
-            this.btn_open.Name = "btn_open";
-            this.btn_open.Size = new System.Drawing.Size(172, 35);
-            this.btn_open.TabIndex = 32;
-            this.btn_open.Text = "Открыть в Excel";
-            this.btn_open.UseVisualStyleBackColor = false;
-            this.btn_open.Click += new System.EventHandler(this.btn_open_Click);
+            this.btn_save.BackColor = System.Drawing.Color.NavajoWhite;
+            this.btn_save.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_save.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btn_save.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btn_save.Location = new System.Drawing.Point(1164, 111);
+            this.btn_save.Name = "btn_save";
+            this.btn_save.Size = new System.Drawing.Size(172, 35);
+            this.btn_save.TabIndex = 32;
+            this.btn_save.Text = "Открыть в Excel";
+            this.btn_save.UseVisualStyleBackColor = false;
+            this.btn_save.Click += new System.EventHandler(this.btn_save_Click);
             // 
             // btn_find
             // 
@@ -264,6 +266,7 @@ namespace Ecxel
             this.lb_count.Size = new System.Drawing.Size(165, 22);
             this.lb_count.TabIndex = 36;
             this.lb_count.Text = "Количество строк";
+            this.lb_count.Visible = false;
             // 
             // btn_clear
             // 
@@ -279,18 +282,38 @@ namespace Ecxel
             this.btn_clear.UseVisualStyleBackColor = false;
             this.btn_clear.Click += new System.EventHandler(this.btn_clear_Click);
             // 
+            // openFileDialog
+            // 
+            this.openFileDialog.FileName = "openFileDialog";
+            this.openFileDialog.Filter = "Excel|*.xlsx";
+            // 
+            // btn_open
+            // 
+            this.btn_open.BackColor = System.Drawing.Color.NavajoWhite;
+            this.btn_open.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_open.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btn_open.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btn_open.Location = new System.Drawing.Point(641, 28);
+            this.btn_open.Name = "btn_open";
+            this.btn_open.Size = new System.Drawing.Size(172, 35);
+            this.btn_open.TabIndex = 38;
+            this.btn_open.Text = "Открыть файл";
+            this.btn_open.UseVisualStyleBackColor = false;
+            this.btn_open.Click += new System.EventHandler(this.btn_open_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PapayaWhip;
             this.ClientSize = new System.Drawing.Size(1354, 558);
+            this.Controls.Add(this.btn_open);
             this.Controls.Add(this.btn_clear);
             this.Controls.Add(this.lb_count);
             this.Controls.Add(this.cb_pol);
             this.Controls.Add(this.lb_pol);
             this.Controls.Add(this.btn_find);
-            this.Controls.Add(this.btn_open);
+            this.Controls.Add(this.btn_save);
             this.Controls.Add(this.cb_nastavnik);
             this.Controls.Add(this.lb_nastavnik);
             this.Controls.Add(this.cb_status);
@@ -310,7 +333,6 @@ namespace Ecxel
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ЦОД";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -332,12 +354,14 @@ namespace Ecxel
         private System.Windows.Forms.Label lb_status;
         private System.Windows.Forms.ComboBox cb_nastavnik;
         private System.Windows.Forms.Label lb_nastavnik;
-        private System.Windows.Forms.Button btn_open;
+        private System.Windows.Forms.Button btn_save;
         private System.Windows.Forms.Button btn_find;
         private System.Windows.Forms.ComboBox cb_pol;
         private System.Windows.Forms.Label lb_pol;
         private System.Windows.Forms.Label lb_count;
         private System.Windows.Forms.Button btn_clear;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.Button btn_open;
     }
 }
 

@@ -23,29 +23,13 @@ namespace Ecxel
         private DataTableCollection tableCollection = null;
         int count;
         static FileStream stream;
-        Process proc;
+        string path;
+        bool valid;
+        Process[] proc = new Process[0];
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            openExcelFile();
-            count = dataGridView.Rows.Count - 1;
-
-            design();
-
-            fillOkrug();
-            fillClass();
-            fillOrganiz();
-            fillStatus();
-            fillUchenik();
-            fillNast();
-            cb_pol.Items.Add("");
-            cb_pol.Items.Add("Не указано");
-            cb_pol.Items.Add("Мужской");
-            cb_pol.Items.Add("Женский");
-
-            lb_count.Text = "Количество строк: " + dataGridView.Rows.Count;
-        }
-
+        /// <summary>
+        /// Графическое оформление dataGridView
+        /// </summary>
         private void design()
         {
             int max;
@@ -69,6 +53,14 @@ namespace Ecxel
                 }
             }
 
+            for (int i = 0; i < dataGridView.Rows.Count; i++)
+            {
+                if (Convert.ToString(dataGridView[3, i].Value) != "")
+                {
+                    dataGridView[3, i].Value = Convert.ToString(dataGridView[3, i].Value).Substring(0, 10);
+                }
+            }
+
             dataGridView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView.Columns[0].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -77,31 +69,10 @@ namespace Ecxel
             dataGridView.Columns[10].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
         }
 
-        public static void openFile()
-        {
-            string path = string.Empty;
-            try
-            {
-                path = Environment.CurrentDirectory;
-                path = path.Substring(0, path.Length - 23);
-                path += "Таблица.xlsx";
-
-                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-                stream = File.Open(path, FileMode.Open, FileAccess.Read);
-            }
-            catch (FileNotFoundException)
-            {
-                MessageBox.Show($"Файл 'Таблица.xlsx' не найден. Проверьте наличие данного файла по следующему пути:\n{path}", "Отсутствие файла данных", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Process.GetCurrentProcess().Kill();
-            }
-            catch (IOException)
-            {
-                MessageBox.Show("Закройте файл 'Таблица.xlsx'\nи запустите приложение повторно", "Файл данных", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Process.GetCurrentProcess().Kill();
-            }
-        }
-
-        private void openExcelFile()
+        /// <summary>
+        /// Открытие Excel файла и заполнение значений DataGridView
+        /// </summary>
+        private void fillData()
         {
             IExcelDataReader reader = ExcelReaderFactory.CreateReader(stream);
             DataSet db = reader.AsDataSet(new ExcelDataSetConfiguration()
@@ -113,18 +84,22 @@ namespace Ecxel
             });
 
             tableCollection = db.Tables;
-            SD.DataTable table = tableCollection["лист"];
-            dataGridView.DataSource = table;
-
-            for (int i = 0; i < dataGridView.Rows.Count; i++)
+            SD.DataTable table = tableCollection[0];
+            if (table.Columns.Count != 11 || table.Columns[10].ColumnName != "Пол")
             {
-                if (Convert.ToString(dataGridView[3, i].Value) != "")
-                {
-                    dataGridView[3, i].Value = Convert.ToString(dataGridView[3, i].Value).Substring(0, 10);
-                }
+                valid = false;
+                return;
+            }
+            else
+            {
+                valid = true;
+                dataGridView.DataSource = table;
             }
         }
 
+        /// <summary>
+        /// Заполнение муниципалитета
+        /// </summary>
         private void fillOkrug()
         {
             string[] array = new string[2];
@@ -167,6 +142,9 @@ namespace Ecxel
             }
         }
 
+        /// <summary>
+        /// Заполнение класса
+        /// </summary>
         private void fillClass()
         {
             string[] array = new string[2];
@@ -212,6 +190,9 @@ namespace Ecxel
             }
         }
 
+        /// <summary>
+        /// Заполнение организации
+        /// </summary>
         private void fillOrganiz()
         {
             string[] array = new string[2];
@@ -266,6 +247,9 @@ namespace Ecxel
             cb_organiz.Size = new System.Drawing.Size(Convert.ToInt32(width * 10.5), 30);
         }
 
+        /// <summary>
+        /// Заполнение статуса
+        /// </summary>
         private void fillStatus()
         {
             string[] array = new string[2];
@@ -310,6 +294,9 @@ namespace Ecxel
             }
         }
 
+        /// <summary>
+        /// Заполнение учеников
+        /// </summary>
         private void fillUchenik()
         {
             string[] array = new string[2];
@@ -334,6 +321,9 @@ namespace Ecxel
             }
         }
 
+        /// <summary>
+        /// Заполнение наставников
+        /// </summary>
         private void fillNast()
         {
             string[] array = new string[2];
@@ -378,27 +368,17 @@ namespace Ecxel
             }
         }
 
-        private void btn_open_Click(object sender, EventArgs e)
+        private void btn_save_Click(object sender, EventArgs e)
         {
             Excel.Application exApp = new Excel.Application();
-            proc = Process.GetProcessesByName("EXCEL").Last();
+            Array.Resize(ref proc, proc.Length + 1);
+            proc[proc.Length - 1] = Process.GetProcessesByName("EXCEL").Last();
             exApp.Workbooks.Add();
             Worksheet workSheet = (Worksheet)exApp.ActiveSheet;
             for (int i = 0; i < dataGridView.Columns.Count; i++)
             {
                 workSheet.Cells[1, i + 1] = dataGridView.Columns[i].HeaderText;
             }
-            //workSheet.Cells[1, 1] = "№ п/п";
-            //workSheet.Cells[1, 2] = "Муниципалитет";
-            //workSheet.Cells[1, 3] = "ФИО ученика";
-            //workSheet.Cells[1, 4] = "Дата рождения";
-            //workSheet.Cells[1, 5] = "Класс";
-            //workSheet.Cells[1, 6] = "ОО";
-            //workSheet.Cells[1, 7] = "Адрес ОО";
-            //workSheet.Cells[1, 8] = "Балл";
-            //workSheet.Cells[1, 9] = "Статус";
-            //workSheet.Cells[1, 10] = "ФИО наставника";
-            //workSheet.Cells[1, 11] = "Пол";
 
             int rowExcel = 2;
             for (int i = 0; i < dataGridView.Rows.Count; i++)
@@ -421,7 +401,7 @@ namespace Ecxel
 
         private void btn_find_Click(object sender, EventArgs e)
         {
-            openExcelFile();
+            fillData();
 
             bool okrug;
             bool klass;
@@ -572,7 +552,7 @@ namespace Ecxel
             if (dataGridView.Rows.Count == 0)
             {
                 MessageBox.Show("Подходящих данному условию строк не найдено", "Фильтр", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                openExcelFile();
+                fillData();
             }
             lb_count.Text = "Количество строк: " + dataGridView.Rows.Count;
             design();
@@ -580,9 +560,12 @@ namespace Ecxel
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (proc != null)
+            foreach (Process item in proc)
             {
-                proc.Kill();
+                if (item != null)
+                {
+                    item.Kill();
+                }
             }
         }
 
@@ -630,6 +613,67 @@ namespace Ecxel
             cb_pol.Text = "";
             cb_status.Text = "";
             cb_uchenik.Text = "";
+        }
+
+        private void btn_open_Click(object sender, EventArgs e)
+        {
+            path = string.Empty;
+
+            if (stream != null)
+            {
+                stream.Close();
+            }
+
+            try
+            {
+                DialogResult res = openFileDialog.ShowDialog();
+                if (res == DialogResult.OK)
+                {
+                    path = openFileDialog.FileName;
+                    Text = path;
+                    Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                    stream = File.Open(path, FileMode.Open, FileAccess.Read);
+                    fillData();
+                    if (!valid)
+                    {
+                        MessageBox.Show("Данная таблица не подходит для приложения. Выберите другую таблицу", "Выбор файла данных", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                    count = dataGridView.Rows.Count - 1;
+
+                    design();
+
+                    cb_okrug.Items.Clear();
+                    cb_class.Items.Clear();
+                    cb_organiz.Items.Clear();
+                    cb_status.Items.Clear();
+                    cb_uchenik.Items.Clear();
+                    cb_nastavnik.Items.Clear();
+                    cb_pol.Items.Clear();
+
+                    fillOkrug();
+                    fillClass();
+                    fillOrganiz();
+                    fillStatus();
+                    fillUchenik();
+                    fillNast();
+                    cb_pol.Items.Add("");
+                    cb_pol.Items.Add("Не указано");
+                    cb_pol.Items.Add("Мужской");
+                    cb_pol.Items.Add("Женский");
+
+                    lb_count.Visible = true;
+                    lb_count.Text = "Количество строк: " + dataGridView.Rows.Count;
+                }
+                else
+                {
+                    MessageBox.Show("Файл не выбран", "Выбор файла данных", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (IOException)
+            {
+                MessageBox.Show("Выбранный файл уже открыт. Закройте файл и повторите попытку", "Выбор файла данных", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }
