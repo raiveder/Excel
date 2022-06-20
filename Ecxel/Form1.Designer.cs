@@ -142,6 +142,7 @@ namespace Ecxel
             this.cb_organiz.FormattingEnabled = true;
             this.cb_organiz.IntegralHeight = false;
             this.cb_organiz.Location = new System.Drawing.Point(176, 132);
+            this.cb_organiz.MaximumSize = new System.Drawing.Size(653, 0);
             this.cb_organiz.Name = "cb_organiz";
             this.cb_organiz.Size = new System.Drawing.Size(494, 30);
             this.cb_organiz.TabIndex = 14;
