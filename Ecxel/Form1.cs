@@ -21,11 +21,11 @@ namespace Ecxel
 
         private string fileName = string.Empty;
         private DataTableCollection tableCollection = null;
-        int count;
-        static FileStream stream;
-        string path;
-        bool valid;
-        Process[] proc = new Process[0];
+        private int count;
+        private static FileStream stream;
+        private string path;
+        private bool valid;
+        private Process[] proc = new Process[0];
 
         /// <summary>
         /// Графическое оформление dataGridView
