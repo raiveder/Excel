@@ -17,6 +17,8 @@ namespace Ecxel
         public Form1()
         {
             InitializeComponent();
+            DebagT.diagWrite("Вход в программу");
+            Debug.WriteLine("Вход в программу");
         }
 
         private string fileName = string.Empty;
