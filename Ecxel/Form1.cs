@@ -17,10 +17,29 @@ namespace Ecxel
         public Form1()
         {
             InitializeComponent();
-            DebagT.diagWrite("Вход в программу");
-            Debug.WriteLine("Вход в программу");
+
+            location = Environment.CurrentDirectory;
+            location = location.Remove(location.Length - 29, 29);
+            location = location.Insert(location.Length, "Diagnostic.txt");
+            FileStream file = new FileStream(location, FileMode.Create);
+            file.Close();
+            debugWrite("Приложение запущено");
         }
 
+        /// <summary>
+        /// Вывод отладочной информации в файл
+        /// </summary>
+        /// <param name="s">Текст для записи в файл</param>
+        private void debugWrite(string s)
+        {
+            TextWriterTraceListener tr = new TextWriterTraceListener(File.AppendText(location));
+            Trace.Listeners.Add(tr);
+            Debug.WriteLine(s);
+            Debug.Flush();
+            tr.Close();
+        }
+
+        string location;
         private string fileName = string.Empty;
         private DataTableCollection tableCollection = null;
         private int count;
@@ -69,6 +88,9 @@ namespace Ecxel
             dataGridView.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView.Columns[7].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView.Columns[10].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            lb_count.Visible = true;
+            lb_count.Text = "Количество строк: " + dataGridView.Rows.Count;
         }
 
         /// <summary>
@@ -372,6 +394,12 @@ namespace Ecxel
 
         private void btn_save_Click(object sender, EventArgs e)
         {
+            if (dataGridView.Rows.Count == 0)
+            {
+                MessageBox.Show("Файл не выбран", "Фильтр", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             Excel.Application exApp = new Excel.Application();
             Array.Resize(ref proc, proc.Length + 1);
             proc[proc.Length - 1] = Process.GetProcessesByName("EXCEL").Last();
@@ -403,6 +431,11 @@ namespace Ecxel
 
         private void btn_find_Click(object sender, EventArgs e)
         {
+            if (stream == null)
+            {
+                MessageBox.Show("Файл не выбран", "Фильтр", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             fillData();
 
             bool okrug;
@@ -556,8 +589,9 @@ namespace Ecxel
                 MessageBox.Show("Подходящих данному условию строк не найдено", "Фильтр", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 fillData();
             }
-            lb_count.Text = "Количество строк: " + dataGridView.Rows.Count;
             design();
+            debugWrite("Применён фильтр, найдёно строк: " + dataGridView.Rows.Count);
+            
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -639,8 +673,11 @@ namespace Ecxel
                     if (!valid)
                     {
                         MessageBox.Show("Данная таблица не подходит для приложения. Выберите другую таблицу", "Выбор файла данных", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        debugWrite("Выбрана неподходящая таблица");
                         return;
                     }
+                    debugWrite("Открыта таблица \"" + path.Substring(path.LastIndexOf("\\") + 1) + "\"");
+
                     count = dataGridView.Rows.Count - 1;
 
                     design();
@@ -663,9 +700,6 @@ namespace Ecxel
                     cb_pol.Items.Add("Не указано");
                     cb_pol.Items.Add("Мужской");
                     cb_pol.Items.Add("Женский");
-
-                    lb_count.Visible = true;
-                    lb_count.Text = "Количество строк: " + dataGridView.Rows.Count;
                 }
                 else
                 {
